@@ -12,7 +12,9 @@ app.get('/',(req,res)=>{
 
 console.log(process.env.MONGO_URI);
 
-app.listen(6789,()=>{
+
+const port = process.env.PORT || 6789
+app.listen(port,()=>{
   connectDB();
-  console.log('Server started at http://localhost:6789');
+  console.log('Server started at http://localhost:' +port);
 })
