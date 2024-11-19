@@ -13,8 +13,8 @@ app.get('/',(req,res)=>{
 console.log(process.env.MONGO_URI);
 
 
-const port = process.env.PORT || 6789
-app.listen(port,()=>{
+const PORT = process.env.PORT || 6789
+app.listen(PORT,()=>{
   connectDB();
-  console.log('Server started at http://localhost:' +port);
+  console.log('Server started at http://localhost:' +PORT);
 })
