@@ -5,7 +5,6 @@ dotenv.config();
 const authMiddleWare = (req, res, next) => {
     // Ensure the Authorization header is present
     const token = req.headers.authorization?.split(' ')[1]; // Use `authorization` header
-
     if (!token) {
         return res.status(401).json({
             status: 'ERR',
@@ -21,9 +20,7 @@ const authMiddleWare = (req, res, next) => {
                 message: 'Authentication failed',
             });
         }
-
         const { payload } = user;
-
         if (payload?.isAdmin) {
             return next(); // Continue to the next middleware if user is an admin
         } else {
@@ -35,6 +32,38 @@ const authMiddleWare = (req, res, next) => {
     });
 };
 
+const authUserMiddleWare = (req, res, next) => {
+    // Ensure the Authorization header is present
+    const token = req.headers.token.split(' ')[1]; // Use `authorization` header
+    const userId = req.params.id
+    if (!token) {
+        return res.status(401).json({
+            status: 'ERR',
+            message: 'Authentication token is missing',
+        });
+    }
+
+    // Verify the token
+    jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
+        if (err) {
+            return res.status(404).json({
+                status: 'ERR',
+                message: 'Authentication failed',
+            });
+        }
+        const { payload } = user;
+        if (payload?.isAdmin || payload?.id === userId) {
+            return next(); // Continue to the next middleware if user is an admin
+        } else {
+            return res.status(404).json({
+                status: 'ERR',
+                message: 'User is not an admin',
+            });
+        }
+    });
+};
+
 module.exports = {
     authMiddleWare,
+    authUserMiddleWare
 };
