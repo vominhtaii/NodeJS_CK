@@ -174,6 +174,7 @@ const getDetailsUser = (id) => {
     });
 };
 
+
 module.exports = {
     createUser,
     loginUser,
