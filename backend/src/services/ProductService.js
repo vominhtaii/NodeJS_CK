@@ -102,24 +102,52 @@ const deleteProduct = (id) => {
     });
 };
 
-const getAllProduct = (limit = 8, page = 0) => {    
+const getAllProduct = (limit, page, sort, filter) => {  
     return new Promise(async (resolve, reject) => {
         try {            
-            const totalProduct = await Product.countDocuments()
-            const allProduct = await Product.find().limit(limit).skip(page * limit)
+            const totalProduct = await Product.countDocuments();
+            if(filter){
+                const label = filter[0];
+                const allProductFilter = await Product.find({ [label]: {'$regex':filter[1] }}).limit(limit).skip(page*limit)
+                resolve({
+                    status: 'OK',
+                    message: 'GET PRODUCT SUCCESS',
+                    data: allProductFilter,
+                    total: totalProduct,
+                    pageCurrent: Number(page + 1),
+                    totalPage: Math.ceil(totalProduct / limit),
+                });
+            }
+            if(sort){
+                const objectSort = {}
+                objectSort[sort[1]] = sort[0]
+                const allProductSort = await Product.find().limit(limit).skip(page*limit).sort(objectSort)
+
+                resolve({
+                    status: 'OK',
+                    message: 'GET PRODUCT SUCCESS',
+                    data: allProductSort,
+                    total: totalProduct,
+                    pageCurrent: Number(page + 1),
+                    totalPage: Math.ceil(totalProduct / limit),
+                });
+            }
+            const allProduct = await Product.find().limit(limit).skip(page*limit).sort()
+
             resolve({
                 status: 'OK',
-                message: 'GET ALL PRODUCT SUCCESS',
+                message: 'GET PRODUCT SUCCESS',
                 data: allProduct,
                 total: totalProduct,
                 pageCurrent: Number(page + 1),
-                totalPage: Math.ceil(totalProduct / limit)
+                totalPage: Math.ceil(totalProduct / limit),
             });
         } catch (e) {
-            reject(e)
+            reject(e);
         }
     });
 };
+
 
 module.exports = {
     createProduct,
