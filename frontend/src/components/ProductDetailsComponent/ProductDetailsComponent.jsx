@@ -70,7 +70,7 @@ const ProductDetailsComponent = () => {
                             height: '48px',
                             width: '220px',
                             border: 'none',
-                            borderRdus: '4px'
+                            borderRadius: '4px'
                         }} 
                         textButton={'Buy Now'}
                         styleTextButton={{color: '#fff', fontSize: '15px', fontWeight: '700'}}

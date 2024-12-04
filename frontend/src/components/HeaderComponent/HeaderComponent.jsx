@@ -7,7 +7,7 @@ import {UserOutlined,CaretDownOutlined,ShoppingCartOutlined,} from '@ant-design/
 
 const HeaderComponent = () => {
   return ( 
-    <div>
+    <div style={{width:'100%', background:'rgb(26,148,255)', display:'flex', justifyContent:'center'}}>
       <WrapperHeader>
         <Col span={6}>
           <WrapperTextHeader>SIÊU SAO</WrapperTextHeader> 
@@ -19,7 +19,7 @@ const HeaderComponent = () => {
             placeholder="Bạn cần gì?"
           />
         </Col>
-        <Col span={6} style={{display:'flex', gap: '20px',alignItems:'center'}}>
+        <Col span={6} style={{display:'flex', gap: '54px',alignItems:'center'}}>
           <WrapperHeaderAccout>
             <UserOutlined style={{fontSize: '30px'}}/>
               <div>
