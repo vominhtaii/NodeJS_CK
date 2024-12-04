@@ -6,8 +6,7 @@ import slider1 from '../../assets/images/slider1.webp'
 import slider2 from '../../assets/images/slider2.webp'
 import slider3 from '../../assets/images/slider3.webp'
 import CardComponent from '../../components/CardComponent/CardComponent';
-// import ButtonComponent from '../../components/ButtonComponent/ButtonComponent';
-// import { Color } from 'antd/es/color-picker';
+
 const HomePage = () =>{
     const arr = ['Bàn phím','Chuột', 'Tai nghe', 'Lót chuột']
     return(
