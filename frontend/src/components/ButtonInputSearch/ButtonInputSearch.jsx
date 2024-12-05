@@ -5,10 +5,10 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const ButtonInputSearch = (props) =>{
     const {
-        size, 
+        size={40},
         placeholder, 
         textButton, 
-        bordered=false, 
+    
         backgroundColorInput = '#fff', 
         BackgroundColorButton = 'rgb(13,92,182)',
         colorButton = '#fff'
