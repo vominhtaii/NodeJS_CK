@@ -5,13 +5,13 @@ import ButtonComponent from '../ButtonComponent/ButtonComponent';
 
 const ButtonInputSearch = (props) =>{
     const {
-        size={40},
+        size=40,
         placeholder, 
         textButton, 
-    
         backgroundColorInput = '#fff', 
         BackgroundColorButton = 'rgb(13,92,182)',
-        colorButton = '#fff'
+        colorButton = '#fff',
+        bordered = true
     } = props
     return(
         <div style={{display:'flex', backgroundColor:"#fff"}}>

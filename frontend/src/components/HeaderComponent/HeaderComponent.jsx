@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 const HeaderComponent = () => {
   const navigate = useNavigate()
   const handleNavigateLogin = ()=>{
-    navigate('sign-in')  
+    navigate('/sign-in')  
   }
 
 
