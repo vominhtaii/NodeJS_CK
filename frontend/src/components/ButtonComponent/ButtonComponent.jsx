@@ -1,12 +1,12 @@
 import React from 'react';
-import { BackTop, Button } from 'antd';
+import {  Button } from 'antd';
 
 const ButtonComponent = ({ size, styleButton, styleTextButton, textButton, disable, ...rests }) => {
     return (
         <Button
-            styles={{
+            style={{
                 ...styleButton,
-                background:disable ? '#ccc': styleButton.background
+                background: disable ? '#ccc': styleButton.background
             }}
             size={size}
             {...rests} 
