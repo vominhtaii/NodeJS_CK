@@ -38,9 +38,13 @@ const SignUpPage = () => {
         navigate('/sign-in');
     };
 
-    const handleSignUp = () => {
-        mutation.mutate({email, password, confirmPassword})
-    };
+    const handleSignUp=()=>{
+        mutation.mutate({
+          email,
+          password,
+          confirmPassword
+        })
+      }
 
     return (
         <div
@@ -149,4 +153,3 @@ const SignUpPage = () => {
 };
 
 export default SignUpPage;
-

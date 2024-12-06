@@ -1,35 +1,53 @@
 const UserService = require('../services/UserService')
 const JwtService = require('../services/JwtService')
 
-const createUser = async (req,res) => {
+const createUser = async (req, res) => {
     try {
-        const {email,password,confirmPassword} = req.body
-        const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
-        const isCheckEmail = reg.test(email)
-        if(!email || !password || !confirmPassword){
-            return res.status(200).json({
-                status:'ERR',
-                message: 'The input is required'
-            })
-        }else if(!isCheckEmail){
-            return res.status(200).json({
-                status:'ERR',
-                message: 'The input is email'
-            })  
-        }else if(password !== confirmPassword){
-            return res.status(200).json({
-                status:'ERR',
-                message: 'The pass is equal confirmpass'
-            }) 
+        const { email, password, confirmPassword } = req.body;
+
+        // Email validation regex
+        const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        const isCheckEmail = reg.test(email);
+
+        // Check if input fields are provided
+        if (!email || !password || !confirmPassword) {
+            return res.status(400).json({
+                status: 'ERR',
+                message: 'All fields are required'
+            });
         }
-        const response = await UserService.createUser(req.body)
-        return res.status(200).json(response)
+
+        // Validate email format
+        if (!isCheckEmail) {
+            return res.status(400).json({
+                status: 'ERR',
+                message: 'Invalid email format'
+            });
+        }
+
+        // Validate password and confirm password match
+        if (password !== confirmPassword) {
+            return res.status(400).json({
+                status: 'ERR',
+                message: 'Password and confirm password do not match'
+            });
+        }
+
+        // Call the UserService to create the user
+        const response = await UserService.createUser(req.body);
+
+        // Return response from UserService
+        return res.status(201).json(response); // Status 201 for successful resource creation
     } catch (e) {
-        return res.status(404).json({
-            message: e
-        })
+        // Log and return error message
+        console.error(e);
+        return res.status(500).json({
+            status: 'ERR',
+            message: 'Internal server error',
+            error: e.message || e
+        });
     }
-}
+};
 
 const loginUser = async (req,res) => {
     try {
