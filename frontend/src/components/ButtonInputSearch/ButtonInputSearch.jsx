@@ -14,7 +14,7 @@ const ButtonInputSearch = (props) =>{
         bordered = true
     } = props
     return(
-        <div style={{display:'flex', backgroundColor:"#fff"}}>
+        <div style={{display:'flex', backgroundColor:"#fff", borderRadius:"8px"}}>
             <InputComponent 
                 size={size} 
                 placeholder={placeholder} 
