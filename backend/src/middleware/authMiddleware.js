@@ -4,7 +4,9 @@ dotenv.config();
 
 const authMiddleWare = (req, res, next) => {
     // Ensure the Authorization header is present
-    const token = req.headers.authorization?.split(' ')[1]; // Use `authorization` header
+    const authHeader = req.headers.authorization;
+    const token = authHeader && authHeader.split(' ')[1]; 
+    console.log('token',token)
     if (!token) {
         return res.status(401).json({
             status: 'ERR',
@@ -32,9 +34,11 @@ const authMiddleWare = (req, res, next) => {
 };
 
 const authUserMiddleWare = (req, res, next) => {
-    // Ensure the Authorization header is present
-    const token = req.headers.token.split(' ')[1]; // Use `authorization` header
-    const userId = req.params.id
+
+    const authHeader = req.headers.token; // Replace with 'authorization' if needed
+    const token = authHeader?.split(' ')[1];
+    const userId = req.params.id;
+
     if (!token) {
         return res.status(401).json({
             status: 'ERR',
@@ -42,25 +46,25 @@ const authUserMiddleWare = (req, res, next) => {
         });
     }
 
-    // Verify the token
     jwt.verify(token, process.env.ACCESS_TOKEN, function (err, user) {
         if (err) {
-            return res.status(404).json({
+            return res.status(403).json({
                 status: 'ERR',
                 message: 'Authentication failed',
             });
         }
-        console.log('user',user)
+
         if (user?.isAdmin || user?.id === userId) {
-            return next(); // Continue to the next middleware if user is an admin
+            return next();
         } else {
-            return res.status(404).json({
+            return res.status(403).json({
                 status: 'ERR',
-                message: 'User is not an admin',
+                message: 'User is not authorized',
             });
         }
     });
 };
+
 
 module.exports = {
     authMiddleWare,

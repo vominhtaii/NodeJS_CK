@@ -1,25 +1,53 @@
-// HeaderComponent.js
-import React from 'react';
-import {WrapperTextHeaderSmall,WrapperHeader, WrapperHeaderAccout, WrapperTextHeader}from'./style'
-import {Col, Badge}from 'antd'
+import React, { useEffect, useState } from 'react';
+import { WrapperTextHeaderSmall, WrapperHeader, WrapperHeaderAccout, WrapperTextHeader, WrapperContentPopup } from './style';
+import { Col, Badge, Popover } from 'antd';
 import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch';
-import {UserOutlined,CaretDownOutlined,ShoppingCartOutlined,} from '@ant-design/icons';
+import { UserOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import * as UserService from "../../services/UserService";
+import { resetUser } from '../../redux/slides/userSlide';
+import Loading from '../LoadingComponent/Loading';
 
 const HeaderComponent = () => {
-  const navigate = useNavigate()
-  const user = useSelector((state)=>state.user)
-  const handleNavigateLogin = ()=>{
-    navigate('/sign-in')  
-  }
-  console.log('user',user)
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.user);
+  const [userName, setUserName] = useState('')
+  const [userAvatar, setUserAvatar] = useState('')
+  const dispatch = useDispatch();
+  const [isPending, setPending] = useState(false); // Fixed useState
 
-  return ( 
-    <div style={{width:'100%', background:'rgb(26,148,255)', display:'flex', justifyContent:'center'}}>
+  const handleNavigateLogin = () => {
+    navigate('/sign-in');
+  };
+
+  const handleLogout = async () => {
+    setPending(true); // Show loading
+    await UserService.logoutUser() // Simulate delay
+    localStorage.removeItem('access_token'); // Remove access_token from localStorage
+    dispatch(resetUser()); // Reset Redux state
+    setPending(false); // Hide loading
+  };
+  
+  useEffect(()=>{
+    setPending(true);
+    setUserName(user?.name)
+    setUserAvatar(user?.avatar)
+    setPending(false);
+  },[user?.name, user?.avatar])
+
+  const content = (
+    <div>
+      <WrapperContentPopup onClick={handleLogout}>Đăng xuất</WrapperContentPopup>
+      <WrapperContentPopup onClick={()=>navigate('/profile-user')}>Thông tin người dùng</WrapperContentPopup>
+    </div>
+  );
+
+  return (
+    <div style={{ width: '100%', background: 'rgb(26,148,255)', display: 'flex', justifyContent: 'center' }}>
       <WrapperHeader>
         <Col span={6}>
-          <WrapperTextHeader>SIÊU SAO</WrapperTextHeader> 
+          <WrapperTextHeader>SIÊU SAO</WrapperTextHeader>
         </Col>
         <Col span={12}>
           <ButtonInputSearch
@@ -28,32 +56,47 @@ const HeaderComponent = () => {
             placeholder="Bạn cần gì?"
           />
         </Col>
-        <Col span={6} style={{display:'flex', gap: '54px',alignItems:'center'}}>
-          <WrapperHeaderAccout>
-            <UserOutlined style={{fontSize: '30px'}}/>
-            {user?.name ? (
-              <div style={{cursor:'pointer'}}>{user.name}</div>
-            ):(
-              <div onClick={handleNavigateLogin} style={{cursor:'pointer'}}>
-                <WrapperTextHeaderSmall>Đăng nhập/Đăng kí</WrapperTextHeaderSmall>
-                <div>
-                  <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>
-                  <CaretDownOutlined />
-                </div>
-              </div>
-            )}
+        <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
+          <Loading isPending={isPending}> {/* Conditional rendering */}
+            <WrapperHeaderAccout>
+              {userAvatar ?(
+                <img src={(userAvatar)} alt="avatar" style={{
+                  height:"30px",
+                  width:"30px",
+                  borderRadius:"50%",
+                  objectFit:"cover"
+              }}/>
+              ):(
+                <UserOutlined style={{ fontSize: '30px' }} />     
+              )}
               
+              {user?.access_token ? (
+                <>
+                  <Popover content={content} trigger="click">
+                    <div style={{ cursor: 'pointer' }}>{userName.length? user.name : 'User'}</div>
+                  </Popover>
+                </>
+              ) : (
+                <div onClick={handleNavigateLogin} style={{ cursor: 'pointer' }}>
+                  <WrapperTextHeaderSmall>Đăng nhập/Đăng kí</WrapperTextHeaderSmall>
+                  <div>
+                    <WrapperTextHeaderSmall>Tài khoản</WrapperTextHeaderSmall>
+                    <CaretDownOutlined />
+                  </div>
+                </div>
+              )}
             </WrapperHeaderAccout>
-            <div>
+          </Loading>
+          <div>
             <Badge count={4} size="small">
-              <ShoppingCartOutlined style={{fontSize: '30px', color:'#fff'}}/>
+              <ShoppingCartOutlined style={{ fontSize: '30px', color: '#fff' }} />
             </Badge>
             <WrapperTextHeaderSmall>Giỏ hàng</WrapperTextHeaderSmall>
-            </div>
+          </div>
         </Col>
-      </WrapperHeader> 
-    </div> 
-    )
-}
+      </WrapperHeader>
+    </div>
+  );
+};
 
 export default HeaderComponent;

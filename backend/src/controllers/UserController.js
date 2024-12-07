@@ -69,8 +69,9 @@ const loginUser = async (req,res) => {
         const {refresh_token, ... newReponse}=response
         //console.log('response',response)
         res.cookie('refresh_token', refresh_token,{
-            HttpOnly:true,
-            Secure:true,
+            httpOnly:true,
+            secure:false,
+            samesite:'strict'
         })
         return res.status(200).json(response)
     } catch (e) {
@@ -167,6 +168,22 @@ const refreshToken = async (req,res) => {
         })
     }
 }
+
+const logoutUser = async (req,res) => {
+    //console.log('req.cookies',req.cookies)
+    try {
+        res.clearCookie('refresh_token')
+        return res.status(200).json({
+            status:'OK',
+            message:'Logout suscessfully'
+        })
+    } catch (e) {
+        return res.status(404).json({
+            message: e
+        })
+    }
+}
+
 module.exports = {
     createUser,
     loginUser,
@@ -174,5 +191,6 @@ module.exports = {
     deleteUser,
     getAllUser,
     getDetailsUser,
-    refreshToken
+    refreshToken,
+    logoutUser
 }

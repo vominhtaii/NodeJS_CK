@@ -1,11 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
 export const useMutationHooks = (fnCallback, options = {}) => {
-    // Ensure the mutation is correctly configured and callbacks can be passed in `options`
-    const mutation = useMutation({
-        mutationFn: fnCallback,
-        ...options, // Spread additional options like onSuccess, onError, etc.
-    });
+  if (typeof fnCallback !== 'function') {
+    throw new Error('The first argument to useMutationHooks must be a function');
+  }
 
-    return mutation;
+  const mutation = useMutation({
+    mutationFn: fnCallback,
+    ...options,
+  });
+
+  return mutation;
 };
