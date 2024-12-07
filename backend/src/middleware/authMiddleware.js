@@ -20,8 +20,7 @@ const authMiddleWare = (req, res, next) => {
                 message: 'Authentication failed',
             });
         }
-        const { payload } = user;
-        if (payload?.isAdmin) {
+        if (user?.isAdmin) {
             return next(); // Continue to the next middleware if user is an admin
         } else {
             return res.status(403).json({
@@ -51,8 +50,8 @@ const authUserMiddleWare = (req, res, next) => {
                 message: 'Authentication failed',
             });
         }
-        const { payload } = user;
-        if (payload?.isAdmin || payload?.id === userId) {
+        console.log('user',user)
+        if (user?.isAdmin || user?.id === userId) {
             return next(); // Continue to the next middleware if user is an admin
         } else {
             return res.status(404).json({

@@ -4,6 +4,9 @@ const {default: mongoose} = require('mongoose');
 const routes = require('./routes')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+
+
 dotenv.config()
 
 const app = express()
@@ -13,6 +16,7 @@ app.use(express.static('public'));
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(cookieParser())
 
 routes(app);
 
