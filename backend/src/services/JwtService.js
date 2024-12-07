@@ -27,10 +27,9 @@ const refreshTokenJWTService = async (token) => {
                         message: 'The authentication token is invalid or expired'
                     });
                 } else {
-                    const { payload } = user;
                     const access_token = await generalAccessToken({
-                        id: payload?.id,
-                        isAdmin: payload?.isAdmin
+                        id: user?.id,
+                        isAdmin: user?.isAdmin
                     });
 
                     resolve({
