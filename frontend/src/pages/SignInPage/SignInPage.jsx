@@ -19,7 +19,6 @@ const SignInPage = () => {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const mutation = useMutationHooks(data => UserService.loginUser(data));
   const { data, isPending, isSuccess } = mutation;
 

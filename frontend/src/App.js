@@ -1,22 +1,27 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect,useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DefaultComponent from './components/DefaultComponent/DefaultComponent';
 import { routes } from './routes';
 import { isJsonString } from './utils';
 import {jwtDecode} from "jwt-decode"; // Corrected import
 import * as UserService from "./services/UserService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "./redux/slides/userSlide";
 import axios from 'axios'
+import Loading from './components/LoadingComponent/Loading';
 
 function App() {
   const dispatch = useDispatch();
-
+  const [isPending, setIsPending] = useState(false)
+  const user = useSelector((state) => state.user)
+   
   useEffect(() => {
+    setIsPending(true)
     const {storageData, decoded} = handleDecoded()
       if (decoded?.id) {
         handleGetDetailsUser(decoded?.id, storageData);
-      }      
+      }   
+      setIsPending(false)   
   }, []);
 
   const handleDecoded = () =>{
@@ -45,6 +50,7 @@ function App() {
     try {
       const res = await UserService.getDetailsUser(id, token);
       dispatch(updateUser({ ...res?.data, access_token: token }));
+      setIsPending(false)
     } catch (error) {
       console.error('Error fetching user details:', error.response?.data || error.message);
       if (error.response?.status === 401) {
@@ -56,25 +62,28 @@ function App() {
 
   return (
     <div>
-      <Router>
-        <Routes>
-          {routes.map((route) => {
-            const Page = route.page;
-            const Layout = route.isShowHeader ? DefaultComponent : Fragment;
-            return (
-              <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  <Layout>
-                    <Page />
-                  </Layout>
-                }
-              />
-            );
-          })}
-        </Routes>
-      </Router>
+      <Loading isPending={isPending} style={{background: '#ccc'}}>
+        <Router>
+          <Routes>
+            {routes.map((route) => {
+              const Page = route.page;
+              const isCheckAuth = !route.isPrivate || user.isAdmin
+              const Layout  = route.isShowHeader ? DefaultComponent : Fragment
+              return (
+                <Route
+                  key={route.path}
+                  path={isCheckAuth ? route.path: '*'}
+                  element={
+                    <Layout>
+                      <Page />
+                    </Layout>
+                  }
+                />
+              );
+            })}
+          </Routes>
+        </Router>
+      </Loading>
     </div>
   );
 }

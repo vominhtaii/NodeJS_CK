@@ -32,7 +32,7 @@ const SignUpPage = () => {
         }else if (isError){
             message.error()
         }
-    },[isSuccess, isError])
+    })
 
 
     const handleOnchangeEmail = (value) => {
