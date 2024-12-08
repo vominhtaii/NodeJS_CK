@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { WrapperTextHeaderSmall, WrapperHeader, WrapperHeaderAccout, WrapperTextHeader, WrapperContentPopup } from './style';
+import { WrapperTextHeaderSmall, WrapperHeader, WrapperHeaderAccount, WrapperTextHeader, WrapperContentPopup } from './style';
 import { Col, Badge, Popover } from 'antd';
 import ButtonInputSearch from '../ButtonInputSearch/ButtonInputSearch';
 import { UserOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
@@ -12,6 +12,7 @@ import Loading from '../LoadingComponent/Loading';
 const HeaderComponent = (isHiddenSearch=false,isHiddenCart=false) => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
+  console.log("user", user)
   const [userName, setUserName] = useState('')
   const [userAvatar, setUserAvatar] = useState('')
   const dispatch = useDispatch();
@@ -32,7 +33,11 @@ const HeaderComponent = (isHiddenSearch=false,isHiddenCart=false) => {
   useEffect(()=>{
     setPending(true);
     setUserName(user?.name)
-    setUserAvatar(user?.avatar)
+    if (user?.avatar) {
+      setUserAvatar(user.avatar);
+    } else {
+      setUserAvatar(''); // Reset avatar if not available
+    }
     setPending(false);
   },[user?.name, user?.avatar])
 
@@ -65,22 +70,22 @@ const HeaderComponent = (isHiddenSearch=false,isHiddenCart=false) => {
         
         <Col span={6} style={{ display: 'flex', gap: '54px', alignItems: 'center' }}>
           <Loading isPending={isPending}> {/* Conditional rendering */}
-            <WrapperHeaderAccout>
-              {userAvatar ?(
-                <img src={(userAvatar)} alt="avatar" style={{
+            <WrapperHeaderAccount>
+              {userAvatar ? (
+                <img src={userAvatar} alt="avatar" style={{
                   height:"30px",
                   width:"30px",
                   borderRadius:"50%",
                   objectFit:"cover"
               }}/>
               ):(
-                <UserOutlined style={{ fontSize: '30px' }} />     
+              <UserOutlined style={{ fontSize: '30px' }} />     
               )}
               
               {user?.access_token ? (
                 <>
                   <Popover content={content} trigger="click" style={{float: 'right'}}>
-                    <div style={{ cursor: 'pointer' }}>{userName.length? user.name : 'User'}</div>
+                    <div style={{ cursor: 'pointer' }}>{ user.name}</div>
                   </Popover>
                 </>
               ) : (
@@ -92,9 +97,9 @@ const HeaderComponent = (isHiddenSearch=false,isHiddenCart=false) => {
                   </div>
                 </div>
               )}
-            </WrapperHeaderAccout>
+            </WrapperHeaderAccount>
           </Loading>
-          {!isHiddenCart && (
+          {isHiddenCart && (
             <div>
               <Badge count={4} size="small">
                 <ShoppingCartOutlined style={{ fontSize: '30px', color: '#fff' }} />

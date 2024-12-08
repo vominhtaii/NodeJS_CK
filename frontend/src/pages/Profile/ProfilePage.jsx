@@ -53,13 +53,23 @@ const ProfilePage =() =>{
     const handleOnchangeEmail = (value) =>{
         setEmail(value)
     }
-    const handleOnchangeAvatar = async ({fileList}) =>{
-        const file = fileList[0]
+    const handleOnchangeAvatar = async ({ fileList }) => {
+        // Check if fileList has at least one file
+        const file = fileList?.[0];
+      
+        if (!file) {
+          console.error("No file selected.");
+          return;
+        }
+      
+        // Check if both 'url' and 'preview' are undefined and set the preview if needed
         if (!file.url && !file.preview) {
-            file.preview = await getBase64(file.originFileObj);
-          }
-        setAvatar(file.preview)
-    }
+          file.preview = await getBase64(file.originFileObj);
+        }
+      
+        setAvatar(file.preview);
+      };
+      
     const handleOnchangeName = (value) =>{
         setName(value)
     }
@@ -145,7 +155,7 @@ const ProfilePage =() =>{
                 </WrapperInput>
                 <WrapperInput>
                     <WrapperLabel htmlFor='avatar'>Avatar</WrapperLabel>
-                    <WrapperUploadFile onChange={handleOnchangeAvatar}>
+                    <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
                         <Button icon={<UploadOutlined/>}>Select file</Button>
                     </WrapperUploadFile>
                     {avatar && (

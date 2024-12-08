@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     isAdmin: { type: Boolean, default: false },
     phone: { type: String },
     address: { type:String},
-    avatar: { type:String }
+    avatar: { type:String },
   },
   {
     timestamps: true

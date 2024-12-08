@@ -23,24 +23,37 @@ const SignInPage = () => {
   const { data, isPending, isSuccess } = mutation;
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate('/');
-      localStorage.setItem('access_token', JSON.stringify(data?.access_token));
-      if (data?.access_token) {
-        const decoded = jwtDecode(data?.access_token); // Updated function usage
-        console.log('decode', decoded);
-        if (decoded?.id) {
-          handleGetDetailsUser(decoded?.id, data?.access_token);
-        }
+    if (isSuccess && data?.access_token) {
+      localStorage.setItem('access_token', JSON.stringify(data.access_token));
+      const decoded = jwtDecode(data.access_token);
+      console.log('Decoded token:', decoded);
+      if (decoded?.id) {
+        handleGetDetailsUser(decoded.id, data.access_token).then(() => {
+          navigate('/');
+        });
       }
     }
   }, [isSuccess]);
+  
 
   const handleGetDetailsUser = async (id, token) => {
-    const res = await UserService.getDetailsUser(id, token);
-    dispatch(updateUser({ ...res?.data, access_token: token }));
+    try {
+      const res = await UserService.getDetailsUser(id, token);
+      if (res && res.data && res.data.length > 0) {
+        const user = res.data.find(user => user._id === id); // Find user by id
+        if (user) {
+          console.log('User details fetched:', user);
+          dispatch(updateUser({ ...user, access_token: token }));
+        } else {
+          console.error('User not found in response.');
+        }
+      } else {
+        console.error('Unexpected API response:', res);
+      }
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+    }
   };
- 
 
   console.log('mutation', mutation);
 

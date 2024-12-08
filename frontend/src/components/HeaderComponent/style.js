@@ -15,7 +15,7 @@ export const WrapperTextHeader = styled.span`
     front-weight:bold;
     text-align: left;
 `
-export const WrapperHeaderAccout = styled.div`
+export const WrapperHeaderAccount = styled.div`
     display:flex;
     align-items:center;
     color:#fff;
