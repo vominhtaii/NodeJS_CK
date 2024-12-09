@@ -30,3 +30,5 @@ const TableComponent =({ selectionType = 'checkbox' , data=[], isPending= false,
     )
 }
 export default TableComponent
+
+
