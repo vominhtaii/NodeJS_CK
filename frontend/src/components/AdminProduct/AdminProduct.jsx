@@ -6,19 +6,21 @@ import TableComponent from "../TableComponent/TableComponent";
 import InputComponent from "../InputComponent/InputComponent";
 import { getBase64 } from "../../utils";
 import * as ProductService from "../../services/ProductService";
-import { createProduct, updateProduct } from "../../services/ProductService";
+import { createProduct, updateProduct,deleteProduct } from "../../services/ProductService";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import Loading from "../LoadingComponent/Loading";
 import * as message from '../../components/Message/Message'
 import { useQuery } from "@tanstack/react-query";
 import DrawerComponent from "../DrawerComponent/DrawerComponent";
 import { useSelector } from "react-redux";
+import ModalComponent from "../ModalComponent/ModalComponent";
 
 const AdminProduct =()=>{
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [rowSelected, setRowSelected] = useState('')
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [isPendingUpdate, setIsPendingUpdate] = useState(false);
+    const [isModalOpenDelete, setIsModalOpenDelete] = useState(false)
     const user = useSelector((state) => state?.user)
     console.log("roasd",rowSelected)
     const [stateProduct, setStateProduct]=useState({
@@ -43,10 +45,16 @@ const AdminProduct =()=>{
     const [form] = Form.useForm()
 
     const mutationUpdate = useMutationHooks(async (data) => {   
-        const { id, access_token, ...rests } = data;
-        const res = await updateProduct(id, access_token, rests); 
+        const { id, token, ...rests } = data;
+        const res = await updateProduct(id, token, {...rests}); 
         return res;
     });  
+    const mutationDelete = useMutationHooks(async (data) => { 
+        const { id, token } = data;  // You already  // Debugging output to verify the token
+        const res = await deleteProduct(id, token);  // Make sure token is passed
+        return res;
+    });
+    
 
     const mutation = useMutationHooks(
         (data) => {
@@ -98,28 +106,27 @@ const AdminProduct =()=>{
     }, [form, stateProductDetails])
 
     useEffect(() => {
-        if (rowSelected) {
+        if (rowSelected) {            
+            setIsPendingUpdate(true);
             fetchGetDetailsProduct(rowSelected); // Fetch product details based on selected ID
         }
     }, [rowSelected]);   
 
     const handleDetailsProduct = () => {
-        if (rowSelected) {
-            setIsPendingUpdate(true);
-            fetchGetDetailsProduct(rowSelected); // Pass the ID correctly
-        }
         setIsOpenDrawer(true);
     }
 
     const{data,isPending,isSuccess,isError} = mutation
     const{data: dataUpdated,isPending:isPendingUpdated,isSuccess:isSuccessUpdated,isError:isErrorUpdated} = mutationUpdate
+    const{data: dataDeleted,isPending:isPendingDeleted,isSuccess:isSuccessDeleted,isError:isErrorDeleted} = mutationDelete
     console.log('dataUpdated', dataUpdated);
     
-    const {isPending: isPendingProducts, data: products} = useQuery({queryKey: ['products'],queryFn: getAllproducts})
+    const queryProduct = useQuery({queryKey: ['products'],queryFn: getAllproducts})
+    const {isPending: isPendingProducts, data: products} = queryProduct
     const renderAction = () => {
         return (
             <div>
-                <DeleteOutlined style={{color:'red', fontSize:'20px',cursor:'pointer'}}/>
+                <DeleteOutlined style={{color:'red', fontSize:'20px',cursor:'pointer'}} onClick={()=>{setIsModalOpenDelete(true)}}/>
                 <EditOutlined style={{color:'blue', fontSize:'20px',cursor:'pointer'}} onClick={handleDetailsProduct}/>
             </div>
         )
@@ -155,7 +162,7 @@ const AdminProduct =()=>{
     useEffect(()=>{
         if(isSuccess && data?.status === 'OK'){
             message.success()
-            handleCloseDrawer()
+            handleCancel()
         }else if (isError){
             message.error()
         }
@@ -179,11 +186,32 @@ const AdminProduct =()=>{
     useEffect(()=>{
         if(isSuccessUpdated && dataUpdated?.status === 'OK'){
             message.success()
-            handleCancel()
+            handleCloseDrawer()
         }else if (isErrorUpdated){
             message.error()
         }
     },[isSuccessUpdated, dataUpdated, isErrorUpdated])
+
+    useEffect(()=>{
+        if(isSuccessDeleted && dataDeleted?.status === 'OK'){
+            message.success()
+            handleCancelDelete()
+        }else if (isErrorDeleted){
+            message.error()
+        }
+    },[isSuccessDeleted])
+
+    const handleCancelDelete = () =>{
+        setIsModalOpenDelete(false)
+    }
+    const handleDeleteProduct = () => {
+        mutationDelete.mutate({ id: rowSelected, token: user?.access_token }, {
+            onSettled: () => {
+                queryProduct.refetch();  // Refresh the product list after deletion
+            },
+        });
+    };
+    
 
     const handleCancel=()=>{
         setIsModalOpen(false);
@@ -199,10 +227,12 @@ const AdminProduct =()=>{
             }
         )
     };
-    console.log('stateProduct',stateProduct)
     const onFinish=()=>{
-        mutation.mutate(stateProduct)
-        console.log('finish',stateProduct)
+        mutation.mutate(stateProduct, {
+            onSettled:()=>{
+                queryProduct.refetch()
+            }
+        })
     } 
 
     const handleOnchange=(e)=>{
@@ -213,8 +243,6 @@ const AdminProduct =()=>{
     }
 
     const handleOnchangeDetails=(e)=>{
-        console.log('check', e.target.name, e.target.value);
-        
         setStateProductDetails({
             ...stateProductDetails,
             [e.target.name]:e.target.value
@@ -253,7 +281,11 @@ const AdminProduct =()=>{
     console.log('user', user);
     
     const onUpdateProduct = () => {
-        mutationUpdate.mutate({ id: rowSelected, token: user?.access_token, stateProductDetails });
+        mutationUpdate.mutate({ id: rowSelected, token: user?.access_token, ...stateProductDetails }, {
+            onSettled:()=>{
+                queryProduct.refetch()
+            }
+        })
     }
     
     return(
@@ -274,8 +306,8 @@ const AdminProduct =()=>{
             />
 
             </div>
-            <Modal title="Tạo sản phẩm" open={isModalOpen}  onCancel={handleCancel}okText='' footer={null}>
-            <Loading isPending={isPending}>
+            <ModalComponent title="Tạo sản phẩm" open={isModalOpen}  onCancel={handleCancel} footer={null}>
+            <Loading isPending={isPendingUpdated}>
                 <Form
                     name="basic"
                     labelCol={{
@@ -397,7 +429,7 @@ const AdminProduct =()=>{
                     </Form.Item>
                 </Form>
             </Loading>
-            </Modal>
+            </ModalComponent>
             <DrawerComponent title='Chi tiết sản phẩm' isOpen={isOpenDrawer} onClose={() => setIsOpenDrawer(false)}>
                 <Loading isPending={isPendingUpdate}>
                     <Form
@@ -515,6 +547,11 @@ const AdminProduct =()=>{
                     </Form>
                 </Loading>
             </DrawerComponent>
+            <ModalComponent title="Xoá sản phẩm" open={isModalOpenDelete}  onCancel={handleCancelDelete} onOk = {handleDeleteProduct}>
+            <Loading isPending={isPendingDeleted}>
+                <div>Bạn có muốn xoá sản phẩm này không?</div>
+            </Loading>
+            </ModalComponent>
         </div>
     )
 }
