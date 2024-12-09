@@ -41,6 +41,7 @@ export const userSlice = createSlice({
       state.id = '';
       state.access_token = '';
       state.isAdmin = false; // Reset admin status
+      
     },
   },
 });
