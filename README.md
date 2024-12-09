@@ -1,7 +1,7 @@
 
-# <p align="center">Title</p>
+# <p align="center">E-commerce MERN Stack</p>
   
-# 🛒 1. E-commerce MERN Stack  
+# 🛒 1. Overview 
 
 Đây là một ứng dụng thương mại điện tử được xây dựng với MERN Stack (MongoDB, Express.js, React, Node.js).  
 Người dùng có thể duyệt sản phẩm, thêm vào giỏ hàng và thanh toán.  
