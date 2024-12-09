@@ -79,7 +79,7 @@ MONGO_DB= your_mongodb_password
 ACCESS_TOKEN=access_token
 REFRESH_TOKEN=refresh_token
 ```
-Tạo file .env trong thư mục frontend và thêm các biến môi trường sau:
+- Tạo file .env trong thư mục frontend và thêm các biến môi trường sau:
 ```bash
 REACT_APP_API_URL=http://localhost:3000/api
 ```
