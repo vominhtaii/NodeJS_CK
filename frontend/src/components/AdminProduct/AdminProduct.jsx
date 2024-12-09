@@ -5,14 +5,14 @@ import { WrapperHeader, WrapperUploadFile } from "./style";
 import TableComponent from "../TableComponent/TableComponent";
 import InputComponent from "../InputComponent/InputComponent";
 import { getBase64 } from "../../utils";
-import { createProduct } from "../../services/ProductService";
 import * as ProductService from "../../services/ProductService";
+import { createProduct, updateProduct } from "../../services/ProductService";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import Loading from "../LoadingComponent/Loading";
 import * as message from '../../components/Message/Message'
 import { useQuery } from "@tanstack/react-query";
 import DrawerComponent from "../DrawerComponent/DrawerComponent";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 
 const AdminProduct =()=>{
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +20,7 @@ const AdminProduct =()=>{
     const [isOpenDrawer, setIsOpenDrawer] = useState(false);
     const [isPendingUpdate, setIsPendingUpdate] = useState(false);
     const user = useSelector((state) => state?.user)
+    console.log("roasd",rowSelected)
     const [stateProduct, setStateProduct]=useState({
         name:'',
         price:'',
@@ -41,19 +42,11 @@ const AdminProduct =()=>{
 
     const [form] = Form.useForm()
 
-    const mutationUpdate = useMutationHooks(
-        (data) => {
-        console.log('data',data);   
-        const {id,
-            token,
-            ...rests} = data
-        const res =ProductService.updateProduct(
-            id,
-            token,
-            rests
-        )
-        return res
-    })
+    const mutationUpdate = useMutationHooks(async (data) => {   
+        const { id, access_token, ...rests } = data;
+        const res = await updateProduct(id, access_token, rests); 
+        return res;
+    });  
 
     const mutation = useMutationHooks(
         (data) => {
@@ -64,7 +57,7 @@ const AdminProduct =()=>{
             image,
             type,
             countInStock} = data
-        const res =ProductService.createProduct({
+        const res =createProduct({
             name,
             price,
             description,
@@ -79,42 +72,43 @@ const AdminProduct =()=>{
         return res
     }
 
-    const fetchGetDetailsProduct = async () => {
-        const res = await ProductService.getDetailsProduct(rowSelected)
-        if(res?.data){
-            setStateProductDetails({
-                name: res?.data?.name,
-                price: res?.data?.price,
-                desc: res?.data?.desc,
-                rating: res?.data?.rating,
-                image: res?.data?.image,
-                type: res?.data?.type,
-                countInStock: res?.data?.countInStock
-            })
+    const fetchGetDetailsProduct = async (productId) => {
+        try {
+            const res = await ProductService.getDetailsProduct(productId); // Pass productId explicitly
+            if (res?.data) {
+                console.log("Fetched product details:", res?.data); // Debug fetched details
+                setStateProductDetails({
+                    name: res.data.name,
+                    price: res.data.price,
+                    desc: res.data.desc,
+                    rating: res.data.rating,
+                    image: res.data.image,
+                    type: res.data.type,
+                    countInStock: res.data.countInStock
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching product details:", error);
         }
-        setIsPendingUpdate(true)
-    }
-
+        setIsPendingUpdate(false); // Ensure loading state is updated
+    };
+  
     useEffect(() => {
-        form.setFieldValue(stateProductDetails)
+        setStateProductDetails(stateProductDetails)
     }, [form, stateProductDetails])
 
     useEffect(() => {
-        if(rowSelected) {
-            fetchGetDetailsProduct(rowSelected)
+        if (rowSelected) {
+            fetchGetDetailsProduct(rowSelected); // Fetch product details based on selected ID
         }
-    }, [rowSelected])
-
-    console.log('stateProduct', stateProduct);
+    }, [rowSelected]);   
 
     const handleDetailsProduct = () => {
-        if(rowSelected){
-            setIsPendingUpdate(true)
-            fetchGetDetailsProduct()
+        if (rowSelected) {
+            setIsPendingUpdate(true);
+            fetchGetDetailsProduct(rowSelected); // Pass the ID correctly
         }
-        
-        setIsOpenDrawer(true)
-        
+        setIsOpenDrawer(true);
     }
 
     const{data,isPending,isSuccess,isError} = mutation
@@ -154,10 +148,10 @@ const AdminProduct =()=>{
           render: renderAction
         },
       ];
-    const dataTable = products?.data?.length && products?.data?.map((product) => {
-        return {...product, key: product._id}
-    })
-        
+      const dataTable = products?.data?.length 
+      ? products.data.map((product) => ({ ...product, key: product._id }))
+      : [];
+ 
     useEffect(()=>{
         if(isSuccess && data?.status === 'OK'){
             message.success()
@@ -189,7 +183,7 @@ const AdminProduct =()=>{
         }else if (isErrorUpdated){
             message.error()
         }
-    },[isSuccessUpdated])
+    },[isSuccessUpdated, dataUpdated, isErrorUpdated])
 
     const handleCancel=()=>{
         setIsModalOpen(false);
@@ -259,8 +253,9 @@ const AdminProduct =()=>{
     console.log('user', user);
     
     const onUpdateProduct = () => {
-        mutationUpdate.mutate({id: rowSelected, token: user?.AccessToken, stateProductDetails})
+        mutationUpdate.mutate({ id: rowSelected, token: user?.access_token, stateProductDetails });
     }
+    
     return(
         <div>
             <WrapperHeader>Quản lý sản phẩm</WrapperHeader>
@@ -268,14 +263,16 @@ const AdminProduct =()=>{
                 <Button style={{height:'150px', width:'150px',borderRadius:'6px', borderStyle:'dashed'}} onClick={()=>setIsModalOpen(true)}><PlusOutlined style={{fontSize:'60px'}}></PlusOutlined></Button>
             </div>
             <div style={{marginTop:'20px'}}>
-                <TableComponent columns={columns} isPending={isPendingProducts} data={dataTable} 
-                    onRow={(record, rowIndex) => {
-                        return {
-                            onClick: (event) => {
-                                setRowSelected(record._id)
-                            }, 
-                        };
-                    }}/>
+            <TableComponent
+                columns={columns}
+                isPending={isPendingProducts}
+                data={dataTable}
+                onRowClick={(id) => {
+                    setRowSelected(id); // Store the selected product's ID
+                    console.log('Selected Product ID:', id); // Log the ID for debugging
+                }}
+            />
+
             </div>
             <Modal title="Tạo sản phẩm" open={isModalOpen}  onCancel={handleCancel}okText='' footer={null}>
             <Loading isPending={isPending}>
@@ -381,7 +378,7 @@ const AdminProduct =()=>{
                         ]}
                     >
                     <WrapperUploadFile onChange={handleOnchangeAvatar} maxCount={1}>
-                            <Button>Select file</Button>
+                        <Button>Select file</Button>
                             {stateProduct?.image && (
                             <img src={stateProduct?.image} style={{
                                 height:"60px",

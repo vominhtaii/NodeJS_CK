@@ -6,7 +6,6 @@ const authMiddleWare = (req, res, next) => {
     // Ensure the Authorization header is present
     const authHeader = req.headers.authorization;
     const token = authHeader && authHeader.split(' ')[1]; 
-    console.log('token',token)
     if (!token) {
         return res.status(401).json({
             status: 'ERR',

@@ -19,24 +19,41 @@ const createProduct = async (req,res) => {
     }
 }
 
-const updateProduct = async (req,res) => {
+const updateProduct = async (req, res) => {
     try {
-        const productId = req.params.id
-        const data = req.body
-        if(!productId){
-            return res.status(200).json({
+        const productId = req.params.id;
+        const data = req.body;
+
+        // Check if productId is provided
+        if (!productId) {
+            return res.status(400).json({
                 status: 'ERR',
                 message: 'The productId is required'
-            })
+            });
         }
-        const response = await ProductService.updateProduct(productId,data)
-        return res.status(200).json(response)
+
+        // Call the service to update the product
+        const response = await ProductService.updateProduct(productId, data);
+
+        // Check if the update was successful
+        if (!response) {
+            return res.status(404).json({
+                status: 'ERR',
+                message: 'Product not found'
+            });
+        }
+
+        // Send the response
+        return res.status(200).json(response);
     } catch (e) {
-        return res.status(404).json({
-            message: e
-        })
+        // Handle unexpected errors
+        console.error(e);  // Log the error for debugging
+        return res.status(500).json({
+            status: 'ERR',
+            message: 'An error occurred while updating the product'
+        });
     }
-}
+};
 
 const getDetailProduct = async (req,res) => {
     try {
