@@ -3,6 +3,7 @@ import {PlusOutlined} from '@ant-design/icons'
 import { WrapperHeader } from './style';
 import { Button } from 'antd';
 import { PlusCircleFilled } from '@ant-design/icons';
+import TableComponent from '../TableComponent/TableComponent';
 
 const AdminUser =()=>{
     return(

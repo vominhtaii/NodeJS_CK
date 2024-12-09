@@ -8,5 +8,7 @@ const Loading = ({children, isPending, delay = 200}) => {
         </Spin>
     )
 }
-
+Loading.defaultProps = {
+    isPending: false
+}
 export default Loading
