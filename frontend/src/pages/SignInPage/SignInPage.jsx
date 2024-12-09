@@ -35,7 +35,6 @@ const SignInPage = () => {
     }
   }, [isSuccess]);
   
-
   const handleGetDetailsUser = async (id, token) => {
     try {
       const res = await UserService.getDetailsUser(id, token);
