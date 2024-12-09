@@ -71,7 +71,18 @@ cd frontend
 npm install
 npm start
 ```
-
+- Cấu hình file .env
+Tạo file .env trong thư mục backend và thêm các biến môi trường sau:
+```bash
+PORT = 3001
+MONGO_DB= your_mongodb_password
+ACCESS_TOKEN=access_token
+REFRESH_TOKEN=refresh_token
+```
+Tạo file .env trong thư mục backend và thêm các biến môi trường sau:
+```bash
+REACT_APP_API_URL=http://localhost:3000/api
+```
 ## 🚀 5. Sử dụng (Usage)
 Hướng dẫn ngắn gọn về cách sử dụng ứng dụng.
 
