@@ -16,6 +16,7 @@ Quản lý đơn hàng (cập nhật trạng thái)
 
 
 ## 📁 Cấu trúc thư mục
+```bash
 ECOMMERCE/
 ├── client/
 │   ├── public/         
@@ -54,7 +55,7 @@ ECOMMERCE/
 ├── index.js          
 ├── package.json        
 └── README.md
-
+```
 
 ## 📦 Cài đặt
 1. Yêu cầu cài đặt
