@@ -94,17 +94,17 @@ PORT_REACT = http://localhost:3000
 - User: user@gmail.com password:123456
 
 ## Paypal info 
-Email: sb-2wz5a34732211@personal.example.com
-paassword: a&U3'wdm
+- Email: sb-2wz5a34732211@personal.example.com
+- paassword: a&U3'wdm
 
 ## 🛠️ Công nghệ sử dụng (Technologies Used)
-Liệt kê các công nghệ được sử dụng trong dự án.
+- Liệt kê các công nghệ được sử dụng trong dự án.
 
-💻 Frontend: React, Redux, Axios
-📡 Backend: Node.js, Express.js, JWT, bcryptjs
-🗃️ Database: MongoDB, Mongoose
-💳 Thanh toán: PayPal
-🛠️ Công cụ khác: Postman, VS Code, Git
+1. 💻 Frontend: React, Redux, Axios
+2. 📡 Backend: Node.js, Express.js, JWT, bcryptjs
+3. 🗃️ Database: MongoDB, Mongoose
+4. 💳 Thanh toán: PayPal
+5. 🛠️ Công cụ khác: Postman, VS Code, Git
 
 ## 📚 API Endpoints User
 | Phương thức | Endpoint             | Mô tả                         |
