@@ -1,0 +1,209 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+html {
+    margin: 0;
+}
+
+:root {
+    --white-color: #fff;
+    --black-color: #000;
+    --text-color: #333;
+    --height-header: 120px;
+    --height-navbar: 34px;
+    --height-header__with-search: calc(var(--height-header) - var(--height-navbar))
+}
+
+* {
+    box-sizing: inherit;
+    font-family: "Open Sans", sans-serif;
+}
+
+.gird {
+    width: 1270px;
+    max-width: 100%;
+    margin: 0 auto;
+    
+}
+
+.gird__full-width {
+    width: 100%;
+}
+
+.gird__row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.header {
+    background-color: #1e53a9;
+    height: var(--height-header);
+    display: flex;
+    align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.header__navbar--item {
+    list-style: none;
+    color: var(--white-color);
+    display: inline-block;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 300;
+    margin: 0 8px;
+    position: relative;
+    // height: var(--height-navbar);
+}
+
+.header__navbar--list {
+    padding-left: 0;
+    margin-top: 8px;
+}
+
+.header__navbar {
+    display: flex;
+    justify-content: space-between;
+    height: var(--height-navbar);
+}
+
+.item--bold {
+    font-weight: 600;
+}
+
+.item--sperate::after {
+    content: "";
+    display: block;
+    position: absolute;
+    border-left: 1px solid#cac0bf;
+    height: 16px;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header__navbar--item:hover {
+    opacity: 0.9;
+}
+
+.item--icon {
+    text-decoration: none;
+    color: var(--white-color);
+    margin: 0 7px;
+    font-size: 16px;
+}
+
+.unPointer {
+    cursor: text;
+    color: var(--white-color);
+}
+
+.navbar__avatar {
+    width: 30px;
+    border-radius: 50%;
+    height: 26px;
+}
+
+.tooltip {
+    width: 300px;
+}
+
+/* qrCode */
+.item--qrcode {
+    margin-top: 10px;
+    width: 130px;
+    height: 100px;
+    position: absolute;
+    top: 100%;
+    display: none;
+    animation: fadeIn ease-in 1s;
+}
+
+.img--qrcode {
+    width: 170px;
+}
+
+.header__navbar--item:hover .item--qrcode {
+    display: block;
+}
+
+.tooltip--header {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+// header with search
+// .header__with--search {
+//     height: var(--height-header__with-search);
+//     display: flex;
+//     align-items: center;
+//     width: 1270px;
+// }
+.header__with--search {
+    height: var(--height-header__with-search);
+    display: flex; /* Kích hoạt Flexbox */
+    align-items: center; /* Căn giữa nội dung theo chiều dọc */
+    justify-content: space-between; /* Căn đều các phần tử theo chiều ngang */
+    width: 100%; /* Đảm bảo phần tử chiếm toàn bộ chiều rộng */
+    max-width: 1270px; /* Giới hạn chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa theo chiều ngang */
+    padding: 0 10px; /* Khoảng cách bên trong */
+}
+  
+
+.header__logo {
+    color: var(--white-color);
+    font-weight: 500;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Căn giữa nội dung logo theo chiều dọc */
+}
+
+.header__search {
+    height: 40px;
+    background-color: var(--white-color);
+    flex: 1;
+    border-radius: 5px;
+    display: flex;
+    align-items: center; /* Căn giữa nội dung tìm kiếm theo chiều dọc */
+    margin: 0 20px; /* Khoảng cách giữa logo và thanh tìm kiếm */
+}
+
+.header__cart {
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+    padding-right: 20px; /* Căn giữa nội dung giỏ hàng theo chiều dọc */
+}
+
+.icon__cart {
+    font-size: 27px;
+    color: #fff;
+}
+
+.input--search { 
+    flex: 1;
+    height: 100%;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    color: #000;
+    border-radius: 4px;
+    padding: 0 8px;
+    margin-left: 10px;
+}
+
+.btn--search{
+    text-decoration: none;
+    border: none;
+    background-color: #1e53a9;
+    padding: 4px 20px ;
+    margin-right: 10px;
+    border-radius: 5px;
+}

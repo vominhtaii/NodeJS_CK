@@ -1,0 +1,8 @@
+card-short {
+    border: 1px solid;
+    width: 185px;
+    padding: 4px;
+    background: #185bdf;
+    border-radius: 5px;
+    color: #fff;
+}
