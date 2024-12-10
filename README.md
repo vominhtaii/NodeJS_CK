@@ -142,14 +142,11 @@ PORT_REACT = http://localhost:3000
 | **GET**   | `/api/order/getAll-order`  | Xem toàn bộ hóa đơn             |
 
 ## 📷 Ảnh chụp màn hình
-Trang chủ
-(Thêm hình ảnh trang chủ)
+- Trang chủ
 ![Ảnh trang chủ](./screnshot/home-page.jpg)
-Trang chi tiết sản phẩm
-(Thêm hình ảnh chi tiết sản phẩm)
+- Trang chi tiết sản phẩm
 ![Ảnh chi tiết sản phẩm](./screenshot/chi-tiet-san-pham.jpg)
-Giỏ hàng và thanh toán
-(Thêm hình ảnh giỏ hàng)
+- Giỏ hàng và thanh toán
 ![Ảnh giỏ hàng](./screenshot/gio-hang.jpg)
 
 ## 📺 Link youtube
