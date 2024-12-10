@@ -151,6 +151,8 @@ Trang chi tiết sản phẩm
 Giỏ hàng và thanh toán
 (Thêm hình ảnh giỏ hàng)
 
+## 📺 Link youtube
+[Demo]()
 
 ## 🔑 Bảo mật
 - JWT Authentication: Bảo mật API thông qua token.
@@ -169,3 +171,5 @@ GitHub: [My Github](https://github.com/tan06022004)
 
 Tên: [Võ Minh Tài]
 GitHub: [My Github](https://github.com/trungka982004)
+
+
