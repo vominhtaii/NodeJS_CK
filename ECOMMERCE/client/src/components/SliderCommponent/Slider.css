@@ -1,0 +1,19 @@
+.carousel-container {
+  width: 100%;
+  max-width: 1270px; /* Đặt giới hạn chiều rộng */
+  margin: 0 auto;
+  padding: 17px;
+  height: 400px; /* Cố định chiều cao container */
+  overflow: hidden; /* Đảm bảo không có phần thừa ra ngoài */
+}
+
+.carousel-item {
+  height: 100%; /* Đảm bảo mỗi item lấp đầy container */
+}
+
+.carousel-image {
+  width: 100%; /* Ảnh lấp đầy chiều ngang */
+  height: 400px; /* Đồng bộ với chiều cao container */
+  object-fit: cover; /* Giữ tỷ lệ ảnh mà không bị méo */
+  transition: transform 0.3s ease-in-out; /* Làm mượt chuyển động */
+}

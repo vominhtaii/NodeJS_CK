@@ -1,0 +1,36 @@
+.Input-search {
+    margin-left: 204px;
+    font-size: 1.2em;
+    width: 300px;
+}
+.buttonsearch {
+    margin-left: 10px;
+}
+.dropDown{
+    margin-left: 170px;
+}
+.header-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .user-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+  
+  .user-name {
+    color: red;
+    margin-left: 5px;
+  }
+  
+  /* .dropDown {
+    margin-left: 10px;
+  } */
