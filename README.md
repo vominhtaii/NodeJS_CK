@@ -9,21 +9,21 @@ Người dùng có thể duyệt sản phẩm, thêm vào giỏ hàng và thanh 
 ## 🚀 2. Figures
 - Đăng nhập/Đăng ký:
   + 🚪 Người dùng có thể tạo tài khoản hoặc đăng nhập vào tài khoản hiện có.
-Cập nhật hồ sơ/mật khẩu:
+- Cập nhật hồ sơ/mật khẩu:
   + 🔐 Người dùng có thể cập nhật thông tin hồ sơ và thay đổi mật khẩu.
-Quản lý mật khẩu
+- Quản lý mật khẩu
+  + Đặt lại mật khẩu: 📧 , người dùng có thể đặt lại mật khẩu qua email.
 
-- Đặt lại mật khẩu: 📧 , người dùng có thể đặt lại mật khẩu qua email.
-Giỏ hàng
-
-- Thêm/Xóa mục: 🛒 Người dùng có thể thêm mục vào giỏ hàng hoặc xóa mục khi cần.
-- Cập nhật số lượng: 🔢 Có thể điều chỉnh số lượng mục trong giỏ hàng.
+- Giỏ hàng
+  + Thêm/Xóa mục: 🛒 Người dùng có thể thêm mục vào giỏ hàng hoặc xóa mục khi cần.
+  + Cập nhật số lượng: 🔢 Có thể điều chỉnh số lượng mục trong giỏ hàng.
 
 - Mục đã lưu
   + Lưu để xem sau: 💾 Người dùng có thể di chuyển mục từ giỏ hàng sang danh sách "Đã lưu để xem sau" hoặc xóa mục khỏi danh sách đó.
 
 - Wish list
   + Thêm/Xóa mục: ❤️ Người dùng có thể thêm mục vào danh sách mong muốn hoặc xóa mục khỏi danh sách đó.
+  + 
 - Duyệt sản phẩm
   + Phân trang: 📚 Sản phẩm được phân trang, với 8 sản phẩm được hiển thị trên mỗi trang theo mặc định.
   + Tìm kiếm: 🔍 Người dùng có thể tìm kiếm sản phẩm.
@@ -81,7 +81,8 @@ REFRESH_TOKEN=refresh_token
 ```
 - Tạo file .env trong thư mục frontend và thêm các biến môi trường sau:
 ```bash
-REACT_APP_API_URL=http://localhost:3000/api
+REACT_APP_API_KEY =https://backendweb-abz7.onrender.com/api
+REACT_APP_FB_ID= 2136528690066888
 ```
 ## 🚀 5. Sử dụng (Usage)
 Hướng dẫn ngắn gọn về cách sử dụng ứng dụng.
@@ -116,13 +117,16 @@ Quản trị viên có thể đăng nhập và quản lý sản phẩm, đơn h�
 | **GET**     | `/api/product/get-details/:id`   | Lấy chi tiết sản phẩm         |
 
 
+## ➤ Login account
+- Admin: admin@gmail.com, passwowrd:
+- User user@gmail.com, password
+
+## ➤ Line demo
+[Youtube]()
 ## 🙇 8. Author
 #### Phan Thiết Trung
-- Github: [@Trung](https://github.com/trungka982004)
 #### Đỗ Duy Tân
-- Github: [@Trung](https://github.com/trungka982004)
 #### Võ Minh Tài
-- Github: [@Trung](https://github.com/trungka982004)
         
 
         
