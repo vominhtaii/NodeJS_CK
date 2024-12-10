@@ -21,21 +21,21 @@ ECOMMERCE/
 ├── client/
 │   ├── public/         
 │   ├── src/
-│   |    ├── Asset/
-│   |    ├── components/
-│   |    ├── hooks/
-│   |    ├── pages/
-│   |    ├── redux/
-│   |    ├── Routes/
-│   |    ├── Service/
-│   |    ├── App.css/
-│   |    ├── App.js/
-│   |    ├── App.test.js/
-│   |    ├── index.css/
-│   |    ├── index.js/
-│   |    ├── reportWebVitals.js/
-│   |    ├── setupTests.js/
-│   |    ├── utils.js/
+│       ├── Asset/
+│       ├── components/
+│       ├── hooks/
+│       ├── pages/
+│       ├── redux/
+│       ├── Routes/
+│       ├── Service/
+│       ├── App.css/
+│       ├── App.js/
+│       ├── App.test.js/
+│       ├── index.css/
+│       ├── index.js/
+│       ├── reportWebVitals.js/
+│       ├── setupTests.js/
+│       ├── utils.js/
 │   ├── .env/         
 │   ├── .gitignore/         
 │   ├── package-lock.json/     
