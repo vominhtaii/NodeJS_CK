@@ -4,7 +4,7 @@ Dự án E-commerce MERN là một ứng dụng bán hàng trực tuyến đư�
 
 ## 📺 Link youtube 
 - [Link website](https://3t-ecommerce-i3lx.vercel.app/)
-- [Demo]()
+- [Demo Youtube]()
 
 ## 🚀 Chức năng chính
 - 🛒 Người dùng (User)
