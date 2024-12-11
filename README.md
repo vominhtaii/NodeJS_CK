@@ -3,7 +3,7 @@
 Dự án E-commerce MERN là một ứng dụng bán hàng trực tuyến được xây dựng bằng MERN Stack (MongoDB, ExpressJS, ReactJS, NodeJS). Ứng dụng cho phép người dùng mua sắm trực tuyến, quản lý giỏ hàng, thanh toán và quản lý tài khoản cá nhân. Quản trị viên (admin) có thể quản lý sản phẩm, đơn hàng và người dùng.
 
 ## 📺 Link youtube 
-- Link website: [](https://3t-ecommerce-i3lx.vercel.app/)
+- [Link website](https://3t-ecommerce-i3lx.vercel.app/)
 - [Demo]()
 
 ## 🚀 Chức năng chính
