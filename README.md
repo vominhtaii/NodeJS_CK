@@ -157,6 +157,10 @@ PORT_REACT = http://localhost:3000
 - Mã hóa mật khẩu: Sử dụng bcrypt để mã hóa mật khẩu trước khi lưu.
 - Bảo vệ route: Middleware bảo vệ các route admin và user.
 
+## 🌟 Bonus
+- REACT
+- RESTful API
+  
 ## 📜 Giấy phép
 Dự án này được cấp phép theo MIT License.
 
