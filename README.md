@@ -66,8 +66,7 @@ ECOMMERCE/
 3. Cấu hình file .env
 - Front end
 ```bash
-REACT_APP_API_KEY =http://localhost:3000/api
-REACT_APP_FB_ID= 2136528690066888
+REACT_APP_API_KEY =https://node-js-ck.vercel.app/api
 ```
 - Back end
 ```bash
@@ -136,20 +135,18 @@ PORT_REACT = http://localhost:3000
 | Phương thức | Endpoint             | Mô tả                         |
 |------------|----------------------|---------------------------------|
 | **POST**   | `/api/order/create/:id`  | Tạo hóa dơn              |
-| **PUT**   | `/api/order/get-order-details/:id`  | Lấy chi tiết hóa đơn             |
-| **GET**   | `/api/order/order-detail/:id`  | Lấy chi tiết hóa đơn theo id              |
+| **PUT**   | `/api/order/get-order-details/:id`  | Lấy chi tiết hóa đơn  theo id           |
+| **GET**   | `/api/order/order-detail/:id`  | Lấy hóa đơn theo id              |
 | **DELETE**   | `/api/order/cancel-order/:id`  | Hủy một hóa đơn             |
 | **GET**   | `/api/order/getAll-order`  | Xem toàn bộ hóa đơn             |
 
 ## 📷 Ảnh chụp màn hình
-Trang chủ
-(Thêm hình ảnh trang chủ)
-
-Trang chi tiết sản phẩm
-(Thêm hình ảnh chi tiết sản phẩm)
-
-Giỏ hàng và thanh toán
-(Thêm hình ảnh giỏ hàng)
+- Trang chủ
+![Ảnh trang chủ](./home-page.jpg)
+- Trang chi tiết sản phẩm
+![Ảnh chi tiết sản phẩm](./product-details.jpg)
+- Giỏ hàng và thanh toán
+![Ảnh giỏ hàng](./cart.jpg)
 
 ## 📺 Link youtube
 [Demo]()
@@ -170,6 +167,6 @@ Tên: [Đỗ Duy Tân]
 GitHub: [My Github](https://github.com/tan06022004)
 
 Tên: [Võ Minh Tài]
-GitHub: [My Github](https://github.com/trungka982004)
+GitHub: [My Github](https://github.com/vominhtaii)
 
 
