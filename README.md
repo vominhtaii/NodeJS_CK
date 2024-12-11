@@ -142,7 +142,7 @@ PORT_REACT = http://localhost:3000
 
 ## 📷 Ảnh chụp màn hình
 - Trang chủ
-![Ảnh trang chủ](./screnshot/home-page.jpg)
+![Ảnh trang chủ](./home-page.jpg)
 - Trang chi tiết sản phẩm
 ![Ảnh chi tiết sản phẩm](./screenshot/chi-tiet-san-pham.jpg)
 - Giỏ hàng và thanh toán
