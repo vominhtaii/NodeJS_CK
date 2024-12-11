@@ -144,9 +144,9 @@ PORT_REACT = http://localhost:3000
 - Trang chủ
 ![Ảnh trang chủ](./home-page.jpg)
 - Trang chi tiết sản phẩm
-![Ảnh chi tiết sản phẩm](./screenshot/chi-tiet-san-pham.jpg)
+![Ảnh chi tiết sản phẩm](./product-details.jpg)
 - Giỏ hàng và thanh toán
-![Ảnh giỏ hàng](./screenshot/gio-hang.jpg)
+![Ảnh giỏ hàng](./cart.jpg)
 
 ## 📺 Link youtube
 [Demo]()
